@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>BeagleBone 區域監控</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+							<header id="header">
+									<a class="logo"><strong>Embedded System Project</strong> by Nako Lin</a>
+							</header>
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>GPIO</h1>
+											<p>LED燈控</p>
+										</header>
+							            <p>GPIO是我們最常用的輸入/輸出。藉由讀取/寫入某個暫存器，來讓引腳輸入/輸出高電位或是低電位。在此，我們使用LED燈來展示GPIO口的操作，按下按鈕可以改變輸入GPIO的值，藉此改變LED燈的亮暗。</p>
+									</div>
+								</section>
+								<section>
+								   <table style="width:100%">
+								    <tr>
+								    <th>
+								    <span class="image object">
+										<img src="led.png" alt="" width="25px" height="25px"/>
+									</span>
+									 <font color="red" size="5" famil="impact">LED:</font>
+								     </th>
+								     <th>
+								     <font id="g2" color="gray" size="5" famil="impact">P8_7</font>
+								     </th>
+								     <th>
+								     <font id="g3" color="gray" size="5" famil="impact">P8_9</font>
+								     </th>
+								    </tr>
+								    <tr>
+								    <th>
+								    <button onclick="GPIOFunction()" id="gp1" value="Off">Off</button>
+								    </th>
+								    <th>
+								    <button onclick="GPIOAdd(0)" id="gp2" value="Off">Disable</button>
+								    </th>
+								    <th>
+								    <button onclick="GPIOAdd(1)" id="gp3" value="Off">Disable</button>
+								    </th>
+								    </tr>
+								    </table>
+								    
+								    
+								</section>
+
+							
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Home</a></li>
+										<li><a href="gpio.html">GPIO</a></li>
+										<li><a href="pwm.html">PWM</a></li>
+										<li><a href="i2c.html">I2C</a></li>
+										<li><a href="image.html">Upload Image</a></li>
+									</ul>
+								</nav>
+
+							
+							
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+									<p class="copyright">&copy; Modified by Nako Lin, final project for Embedded system ,NO COMMERICAL VLAUE. </p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		     
+		    <script src="/socket.io/socket.io.js"></script>
+            <script src="http://code.jquery.com/jquery-1.11.1.js"></script>     
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+            <script>
+                var socket=io();
+                var gp1_v=0;
+                var gp2_v=0;
+                var gp3_v=0;
+                var flag_gp2=false;
+                var flag_gp3=false;
+            	function GPIOFunction() {
+                    socket.emit('gp1',gp1_v);
+                    if(gp1_v==0)
+                    {
+                       document.getElementById("gp1").innerHTML = "On";
+                       gp1_v=1;
+                    }
+                    else
+                    {
+                        document.getElementById("gp1").innerHTML = "Off";
+                       gp1_v=0;
+                    }
+                 }
+                 function GPIOAdd(x)
+                 {
+                      
+                      console.log(x);
+                      if(x==0){
+                        if(!flag_gp2){
+                             socket.emit('gp_add',"P8_7");
+                            document.getElementById("g2").color="red";
+                            document.getElementById("gp2").innerHTML="Off"
+                            flag_gp2=true
+                        }
+                        else
+                        {
+                            if(gp2_v==0)
+                            {
+                                socket.emit('gp_on',"P8_7");
+                                 document.getElementById("gp2").innerHTML="On"
+                                 gp2_v=1;
+                            }
+                            else
+                            {
+                                gp2_v=0;
+                                socket.emit('gp_ff',"P8_7");
+                                 document.getElementById("gp2").innerHTML="Off"
+                            }
+                        }
+                      }
+                      else
+                      {
+                          if(!flag_gp3){
+                            socket.emit('gp_add',"P8_9");  
+                            document.getElementById("g3").color="red";
+                            document.getElementById("gp3").innerHTML="Off"
+                            flag_gp3=true;
+                          }
+                           else
+                            {
+                                if(gp3_v==0)
+                                {
+                                    gp3_v=1;
+                                    socket.emit('gp_on',"P8_9");
+                                     document.getElementById("gp3").innerHTML="On"
+                                }
+                                else
+                                {
+                                    gp3_v=0;
+                                    socket.emit('gp_ff',"P8_9");
+                                     document.getElementById("gp3").innerHTML="Off"
+                                }
+                            }
+                      }
+                 }
+            </script>
+	</body>
+</html>

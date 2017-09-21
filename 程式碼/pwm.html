@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>BeagleBone 區域監控</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+                <style>
+                		input[type="range"]{
+                		  -webkit-appearance: none;
+                		  border-radius:2px;
+                		  width:200px;
+                		  height:3px;
+                		
+                		  box-shadow:inset #d0d0d0	0 0 5px;
+                		  outline : none;
+                		  transition:.1s;
+                		}
+                		input[type="range"]::-webkit-slider-thumb{
+                		  -webkit-appearance: none;
+                		  width:10px;
+                		  height:10px;
+                		  background:#000000;
+                		  border-radius:50%;
+                		  transition:.1s;
+                		}
+                		
+                		input[type="range"]::-webkit-slider-thumb:hover,
+                		input[type="range"]::-webkit-slider-thumb:active{
+                		  width:16px;
+                		  height:16px;
+                		}
+            	</style>
+            	<script src="http://www.oxxostudio.tw/js/lib/jquery.min.js"></script>
+            	<script>	
+            		$(function(){
+            		  var r = $('input');
+            		  r.on('mouseenter',function(){
+            		    var p = r.val();
+            		    r.on('click',function(){
+            		      p = r.val();
+            		      bg(p);
+            		    });
+            		    r.on('mousemove',function(){
+            		      p = r.val();
+            		      bg(p);
+            		    });
+            		  });
+            		  function bg(n){
+            		      r.css({
+            		        'background-image':'-webkit-linear-gradient(left ,#f22 0%,#f22 '+n+'%,#fff '+n+'%, #fff 100%)'
+            		      });
+            		  }
+            		});
+            	</script>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+							<header id="header">
+									<a class="logo"><strong>Embedded System Project</strong> by Nako Lin</a>
+							</header>
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>PWM</h1>
+											<p>RGB 燈</p><br>
+										</header>
+										    <p>PWM能將類比訊號準成脈波，能夠實現我們常用的電阻器調壓，控制電燈亮度。因此我們藉由改變PWM duty cycle的值，促使輸出不同的電壓給RGB三色燈，根據電壓的不同，燈將會有不同的顏色變化。</p>
+									</div>
+									<span class="image object">
+										<img src="rgb.jpg" alt="" />
+									</span>
+								</section>
+                                <section>
+                                      <input style="text-align:center;color: #FF0000;background-color:#FFABAB;border:3px;border-style:dashed;border-color:#FF0000" readonly="readonly" id="rm" autocomplete="off" value="Red off">
+                                      <input onchange="r($('#rangeR').val())" type="range" min="0" max="10" step="1" id="rangeR" /><br>
+                                      <input style="text-align:center;color: #0000FF;background-color:#A3A3FF;border:3px;border-style:dashed;border-color:#0000FF" readonly="readonly" id="bm" autocomplete="off" value="Blue off">
+                                      <input onchange="b($('#rangeB').val())" type="range" min="0" max="10" step="1" id="rangeB" /><br>
+                                      <input style="text-align:center;color: #00A600;background-color:#ABFFAB;border:3px;border-style:dashed;border-color:#00FF00" readonly="readonly" id="gm" autocomplete="off" value="Green off">
+                                      <input onchange="g($('#rangeG').val())" type="range" min="0" max="10" step="1" id="rangeG" /><br>
+                                </section>
+							
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Home</a></li>
+										<li><a href="gpio.html">GPIO</a></li>
+										<li><a href="pwm.html">PWM</a></li>
+										<li><a href="i2c.html">I2C</a></li>
+										<li><a href="image.html">Upload Image</a></li>
+									</ul>
+								</nav>
+
+							
+							
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+									<p class="copyright">&copy; Modified by Nako Lin, final project for Embedded system ,NO COMMERICAL VLAUE. </p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		    <script src="/socket.io/socket.io.js"></script>
+             <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script>
+			    var socket = io();
+			   
+			    socket.on('R', function(msg){
+                   $('#rm').val('Red:' + msg);
+                 });
+                socket.on('B', function(msg){
+                   $('#bm').val('Blue:' + msg);
+                 });
+                socket.on('G', function(msg){
+                   $('#gm').val('Green:' + msg);
+                 });
+                 
+                 function r(x)
+                 {
+                   socket.emit('R', x);
+                 }
+                 function b(x)
+                 {
+                     socket.emit('B', x);
+                 }
+                  function g(x)
+                 {
+                     socket.emit('G', x);
+                 }
+			</script>
+        
+	</body>
+</html>

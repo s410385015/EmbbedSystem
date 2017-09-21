@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>BeagleBone 區域監控</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+							<header id="header">
+									<a class="logo"><strong>Embedded System Project</strong> by Nako Lin</a>
+							</header>
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>Image Upload</h1>
+											<p>照片上傳功能</p>
+										</header>
+								        <form action='/image.html' method='post' enctype="multipart/form-data">
+                                        <input type="file" accept="image/*;" capture="camera" id="imgF" name="images">
+                                        <input type="submit" value="Upload Image" name="submit"><br>
+                                        </form><br>	
+									</div>
+									<span class="image object">
+										<img src="a.jpg" alt="" />
+									</span>
+								</section>
+								
+
+							
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Home</a></li>
+										<li><a href="gpio.html">GPIO</a></li>
+										<li><a href="pwm.html">PWM</a></li>
+										<li><a href="i2c.html">I2C</a></li>
+										<li><a href="image.html">Upload Image</a></li>
+									</ul>
+								</nav>
+
+							
+							
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+									<p class="copyright">&copy; Modified by Nako Lin, final project for Embedded system ,NO COMMERICAL VLAUE. </p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		    <script src="/socket.io/socket.io.js"></script>
+            <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script>
+			     var socket = io();
+			      socket.on('su', function(msg){
+                   alert("Update Succ!");
+                 });
+			</script>
+
+	</body>
+</html>
